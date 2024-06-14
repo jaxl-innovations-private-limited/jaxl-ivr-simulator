@@ -106,18 +106,18 @@ options:
    On Windows using cmd.exe
 
    ```bash
-   docker run \
-       -it --rm \
-       -v %cd%:/jaxl/ivr \
+   docker run `
+       -it --rm `
+       -v %cd%:/jaxl/ivr `
        jaxlinnovationsprivatelimited/jaxl-ivr-simulator init
    ```
 
    On Windows using PowerShell
 
    ```bash
-   docker run \
-       -it --rm \
-       -v $(pwd):/jaxl/ivr \
+   docker run `
+       -it --rm `
+       -v $(pwd):/jaxl/ivr `
        jaxlinnovationsprivatelimited/jaxl-ivr-simulator init
    ```
 
