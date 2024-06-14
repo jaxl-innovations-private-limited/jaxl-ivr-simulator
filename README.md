@@ -106,9 +106,9 @@ options:
    On Windows using cmd.exe
 
    ```bash
-   docker run `
-       -it --rm `
-       -v %cd%:/jaxl/ivr `
+   docker run ^
+       -it --rm ^
+       -v %cd%:/jaxl/ivr ^
        jaxlinnovationsprivatelimited/jaxl-ivr-simulator init
    ```
 
