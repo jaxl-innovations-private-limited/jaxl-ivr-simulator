@@ -52,7 +52,7 @@ A prompt audio alone works too. Example:
 
 ## About Jaxl IVR Simulator
 
-Jaxl IVR Simulator is available as a Docker container.  It allows you to quickly build and test your custom IVRs.
+Jaxl IVR Simulator is available as a Docker container. It allows you to quickly build and test your custom IVRs.
 
 In a nutshell, your IVR will be responsible for:
 
@@ -128,4 +128,4 @@ options:
 To create your first IVR:
 
 1. Open your project directory in `VSCode`
-2. Follow `PROJECT.md` placed in your project directory for further instructions.
+2. Follow [`PROJECT.md`](./PROJECT.md) placed in your project directory for further instructions.
