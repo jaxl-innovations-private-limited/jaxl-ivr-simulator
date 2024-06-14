@@ -128,4 +128,4 @@ options:
 To create your first IVR:
 
 1. Open your project directory in `VSCode`
-2. Follow `README.md` placed in your project directory for further instructions.
+2. Follow `PROJECT.md` placed in your project directory for further instructions.
