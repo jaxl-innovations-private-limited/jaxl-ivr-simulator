@@ -117,7 +117,7 @@ options:
    ```bash
    docker run `
        -it --rm `
-       -v $(pwd):/jaxl/ivr `
+       -v ${PWD}:/jaxl/ivr `
        jaxlinnovationsprivatelimited/jaxl-ivr-simulator init
    ```
 
