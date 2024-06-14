@@ -99,7 +99,7 @@ options:
    ```bash
    docker run \
        -it --rm \
-       -v ${PWD}:/root/ivr \
+       -v ${PWD}:/jaxl/ivr \
        jaxlinnovationsprivatelimited/jaxl-ivr-simulator init
    ```
 
@@ -108,7 +108,7 @@ options:
    ```bash
    docker run \
        -it --rm \
-       -v %cd%:/root/ivr \
+       -v %cd%:/jaxl/ivr \
        jaxlinnovationsprivatelimited/jaxl-ivr-simulator init
    ```
 
@@ -117,7 +117,7 @@ options:
    ```bash
    docker run \
        -it --rm \
-       -v $(pwd):/root/ivr \
+       -v $(pwd):/jaxl/ivr \
        jaxlinnovationsprivatelimited/jaxl-ivr-simulator init
    ```
 
