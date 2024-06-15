@@ -5,3 +5,5 @@ jaxl-api-credentials*.json
 *.pyc
 .DS_Store
 jaxl/
+IVR.md
+PROJECT.md
