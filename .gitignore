@@ -7,3 +7,4 @@ jaxl-api-credentials*.json
 jaxl/
 IVR.md
 PROJECT.md
+.vscode
