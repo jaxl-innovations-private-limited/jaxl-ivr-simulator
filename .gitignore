@@ -1,0 +1,7 @@
+.venv*
+jaxl-api-credentials*.json
+.mypy_cache
+.pytest_cache
+*.pyc
+.DS_Store
+jaxl/
