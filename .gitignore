@@ -8,3 +8,4 @@ jaxl/
 IVR.md
 PROJECT.md
 .vscode
+.isort.cfg
