@@ -9,12 +9,14 @@ with or without modification, is strictly prohibited.
 
 from pathlib import Path
 from typing import Any, List, Optional, Tuple, Union
+
 from jaxl.ivr.frontend.base import (
     BaseJaxlIVRWebhook,
     ConfigPathOrDict,
     JaxlIVRRequest,
     JaxlIVRResponse,
 )
+
 
 MAIN_MENU_PROMPT = [
     "Press 1 for the first question. ",
@@ -65,7 +67,7 @@ def check_answer(question_id: int, user_answer: str) -> List[str]:
     if user_answer == correct_answer:
         return ["Correct! You have won One crore rupees."]
     else:
-        return ["Incorrect. The correct answer was " + correct_answer]
+        return ["Incorrect. The correct answer was " + str(correct_answer)]
 
 class JaxlIVRKbcquizWebhook(BaseJaxlIVRWebhook):
     """kbc_quiz.json webhook implementation."""
