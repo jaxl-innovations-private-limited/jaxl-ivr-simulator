@@ -10,6 +10,8 @@ with or without modification, is strictly prohibited.
 from pathlib import Path
 from typing import Any, Optional, Tuple
 
+from . import banking
+
 from jaxl.ivr.frontend.base import (
     BaseJaxlIVRWebhook,
     ConfigPathOrDict,
@@ -23,7 +25,7 @@ MAIN_MENU_PROMPT=[
     "Press 2 for transferring money",
     "Press 3 for last five transactions ",
     "Press 4 to block stolen card",
-    "Press 0 followed by a star sign to repeat this menu",
+    "enter any thing to repeat this menu",
 ]
 
 MAIN_MENU = JaxlIVRResponse(
