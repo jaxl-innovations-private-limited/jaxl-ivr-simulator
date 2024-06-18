@@ -35,6 +35,12 @@ MAIN_MENU = JaxlIVRResponse(
 class JaxlIVRLitebankingWebhook(BaseJaxlIVRWebhook):
     """lite_Banking.json webhook implementation."""
 
+    def __init__(self) -> None:
+        super().__init__()
+        self._current_operation: Optional[str] = None
+        self._end_char = "*"
+        self._separator = "#"
+
     @staticmethod
     def config() -> ConfigPathOrDict:
         return Path(__file__).parent.parent / "schemas" / "lite_Banking.json"
@@ -48,6 +54,42 @@ class JaxlIVRLitebankingWebhook(BaseJaxlIVRWebhook):
         # raise NotImplementedError()
 
     def handle_option(self, request: JaxlIVRRequest) -> JaxlIVRResponse:
+        assert request["option"]
+        if request.get("data", None) is not None:
+            data = request["data"]
+            assert data is not None
+            assert data[-1] == self._end_char and self._current_operation
+            # Repeat menu scenario
+            if len(data) == 2 and data[0] == "0":
+                self._current_operation = None
+                return MAIN_MENU
+            numbers = []
+            for num in data[:-1].split(self._separator):
+                try:
+                    num = num.strip()
+                    if num == "":
+                        continue
+                    numbers.append(int(num.strip()))
+                except ValueError:
+                    return JaxlIVRResponse(
+                        prompt=["Invalid input. Please try again."],
+                        num_characters=self._end_char,
+                        stream=None,
+                    )
+            return JaxlIVRResponse(
+                prompt=[
+                    "The answer is",
+                    f"{calculate(self._current_operation, numbers)}",
+                ],
+                num_characters=self._end_char,
+                stream=None,
+            )
+        self._current_operation = request["option"]
+        return JaxlIVRResponse(
+            prompt=get_operation_prompt(request["option"]),
+            num_characters=self._end_char,
+            stream=None,
+        )
         raise NotImplementedError()
 
     def stream(
