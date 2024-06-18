@@ -17,6 +17,20 @@ from jaxl.ivr.frontend.base import (
     JaxlIVRResponse,
 )
 
+MAIN_MENU_PROMPT=[
+    "wellcome to lite banking by jaxl",
+    "Press 1 to check balance ",
+    "Press 2 for transferring money",
+    "Press 3 for last five transactions ",
+    "Press 4 to block stolen card",
+    "Press 0 followed by a star sign to repeat this menu",
+]
+
+MAIN_MENU = JaxlIVRResponse(
+    prompt=MAIN_MENU_PROMPT,
+    num_characters=1,
+    stream=None,
+)
 
 class JaxlIVRLitebankingWebhook(BaseJaxlIVRWebhook):
     """lite_Banking.json webhook implementation."""
@@ -26,10 +40,12 @@ class JaxlIVRLitebankingWebhook(BaseJaxlIVRWebhook):
         return Path(__file__).parent.parent / "schemas" / "lite_Banking.json"
 
     def setup(self, request: JaxlIVRRequest) -> JaxlIVRResponse:
-        raise NotImplementedError()
+        return MAIN_MENU
 
     def teardown(self, request: JaxlIVRRequest) -> None:
-        raise NotImplementedError()
+        print("End of call")
+        # return
+        # raise NotImplementedError()
 
     def handle_option(self, request: JaxlIVRRequest) -> JaxlIVRResponse:
         raise NotImplementedError()
