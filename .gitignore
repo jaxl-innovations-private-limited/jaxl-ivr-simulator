@@ -3,4 +3,5 @@ jaxl-api-credentials*.json
 __pycache__
 .vscode*
 settings.json
-/.vscode*
+/.vscode*\
+.env
