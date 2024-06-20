@@ -39,7 +39,7 @@ class account:
             return "insufficient balance , transaction failed"
         self.balance-=ammount
         to.balance+=ammount
-        self.transactions.append([ammount,to])
+        self.transactions.append([ammount,to.balance])
         return "transaction successfull now your balance is" +str(self.balance)
     
     def bal_enquiry(self):
@@ -49,10 +49,10 @@ class account:
         lst=[]
         for i in self.transactions:
             if i[0]<0:
-                tr="debit to"
+                tr=" debited to"
             else :
-                tr="credit from"
-            lst.append("rupee "+str(i[0])+tr+" account "+str(i[1]))
+                tr=" credited from"
+            lst.append(" rupee"+str(i[0])+tr+" account "+str(i[1]))
         return lst
 
 def getAcc(phone):
@@ -112,7 +112,7 @@ def menu(data,acc:account,):
 
 def askForExit(data,acc):
     if(data=='*'):
-        return [MAIN_MENU,menu]
+        return [MAIN_MENU,"menu"]
     if data=='#':
         response=JaxlIVRResponse(
             prompt=["good by","have a good day"],
@@ -173,9 +173,18 @@ def block_card(data,acc:account):
         )
     return [response,states[-1]]
 
+def ex(data,acc):
+    response=JaxlIVRResponse(
+            prompt=["call is no longer connected"],
+            num_characters=1,
+            stream=None,
+        )
+    return [response,"exit"]
+
 stateInputMap={
     "menu":menu,
     "askForExit":askForExit,
     "transferring_money":transferring_money,
-    "block_card":block_card
+    "block_card":block_card,
+    "exit":ex
 }

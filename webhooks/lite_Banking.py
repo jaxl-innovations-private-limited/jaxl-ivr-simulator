@@ -21,12 +21,12 @@ from jaxl.ivr.frontend.base import (
 )
 
 MAIN_MENU_PROMPT=[
-    "wellcome to lite banking by jaxl",
+    "wellcome to lite banking by jaxl ",
     "Press 1 to check balance ",
-    "Press 2 for transferring money",
+    "Press 2 for transferring money ",
     "Press 3 for last five transactions ",
-    "Press 4 to block stolen card",
-    "press 9 to repeat this menu",
+    "Press 4 to block stolen card ",
+    "press 9 to repeat this menu ",
 ]
 
 MAIN_MENU = JaxlIVRResponse(
@@ -67,8 +67,8 @@ class JaxlIVRLitebankingWebhook(BaseJaxlIVRWebhook):
             data=request["option"]
         ret=banking.stateInputMap[self.current_state](data,self.acc)
         print(ret)
-        print(self.current_state,'\n\n\n')
         self.current_state=ret[-1]
+        print(self.current_state,'\n\n\n')
         return ret[0]
         # if request.get("data", None) is not None:
         #     data = request["data"]
