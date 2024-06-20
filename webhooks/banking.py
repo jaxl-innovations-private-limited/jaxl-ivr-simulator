@@ -1,10 +1,24 @@
 import random
-from . import MAIN_MENU_PROMPT,MAIN_MENU
+# from .lite_Banking import MAIN_MENU_PROMPT,MAIN_MENU
 from jaxl.ivr.frontend.base import (
     # BaseJaxlIVRWebhook,
     # ConfigPathOrDict,
     # JaxlIVRRequest,
     JaxlIVRResponse,
+)
+MAIN_MENU_PROMPT=[
+    "wellcome to lite banking by jaxl",
+    "Press 1 to check balance ",
+    "Press 2 for transferring money",
+    "Press 3 for last five transactions ",
+    "Press 4 to block stolen card",
+    "press 9 to repeat this menu",
+]
+
+MAIN_MENU = JaxlIVRResponse(
+    prompt=MAIN_MENU_PROMPT,
+    num_characters=1,
+    stream=None,
 )
 
 #may be implementend in future but till now only based on random numbers
@@ -38,7 +52,7 @@ class account:
                 tr="debit to"
             else :
                 tr="credit from"
-            lst.append(tr+" account "+i[1])
+            lst.append("rupee "+str(i[0])+tr+" account "+str(i[1]))
         return lst
 
 def getAcc(phone):
@@ -67,7 +81,7 @@ def menu(data,acc:account,):
     nextState="menu"
     if data=="1":
         prompts=[acc.bal_enquiry()]+ending
-        chL=6
+        chL=1
         nextState=states[-1]
     elif data=="2":
         prompts=["enter account number of beneficiary and then ammount separated by # and ending with *"]
@@ -106,6 +120,13 @@ def askForExit(data,acc):
             stream=None,
         )
         return [response,"exit"]
+    else:
+        response=JaxlIVRResponse(
+            prompt=["Invalid input"],
+            num_characters=1,
+            stream=None,
+        )
+        return [response,states[-1]]
 
 
 def transferring_money(data:str,acc:account):

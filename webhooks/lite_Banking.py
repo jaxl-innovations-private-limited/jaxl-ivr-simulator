@@ -60,9 +60,14 @@ class JaxlIVRLitebankingWebhook(BaseJaxlIVRWebhook):
         # raise NotImplementedError()
 
     def handle_option(self, request: JaxlIVRRequest) -> JaxlIVRResponse:
-        assert request["option"]
+        # assert request["option"]
+        print('\n\n\n',self.current_state)
         data=request.get("data")
+        if(data==None):
+            data=request["option"]
         ret=banking.stateInputMap[self.current_state](data,self.acc)
+        print(ret)
+        print(self.current_state,'\n\n\n')
         self.current_state=ret[-1]
         return ret[0]
         # if request.get("data", None) is not None:
