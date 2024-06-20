@@ -21,12 +21,12 @@ from jaxl.ivr.frontend.base import (
 )
 
 MAIN_MENU_PROMPT=[
-    "wellcome to lite banking by jaxl ",
-    "Press 1 to check balance ",
-    "Press 2 for transferring money ",
-    "Press 3 for last five transactions ",
-    "Press 4 to block stolen card ",
-    "press 9 to repeat this menu ",
+    "wellcome to lite banking by jaxl. ",
+    "Press 1 to check balance. ",
+    "Press 2 for transferring money. ",
+    "Press 3 for last five transactions. ",
+    "Press 4 to block stolen card. ",
+    "press 9 to repeat this menu. ",
 ]
 
 MAIN_MENU = JaxlIVRResponse(

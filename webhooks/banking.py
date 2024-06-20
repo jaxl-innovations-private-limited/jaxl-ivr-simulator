@@ -7,12 +7,12 @@ from jaxl.ivr.frontend.base import (
     JaxlIVRResponse,
 )
 MAIN_MENU_PROMPT=[
-    "wellcome to lite banking by jaxl",
-    "Press 1 to check balance ",
-    "Press 2 for transferring money",
-    "Press 3 for last five transactions ",
-    "Press 4 to block stolen card",
-    "press 9 to repeat this menu",
+    "wellcome to lite banking by jaxl.",
+    "Press 1 to check balance. ",
+    "Press 2 for transferring money.",
+    "Press 3 for last five transactions. ",
+    "Press 4 to block stolen card.",
+    "press 9 to repeat this menu.",
 ]
 
 MAIN_MENU = JaxlIVRResponse(
@@ -36,11 +36,11 @@ class account:
     
     def transfer(self,to,ammount):
         if(ammount>self.balance):
-            return "insufficient balance , transaction failed"
+            return "insufficient balance , transaction failed."
         self.balance-=ammount
         to.balance+=ammount
-        self.transactions.append([ammount,to.balance])
-        return "transaction successfull now your balance is" +str(self.balance)
+        self.transactions.append([ammount,to.accountN0])
+        return "transaction successfull now your balance is" +str(self.balance)+"."
     
     def bal_enquiry(self):
         return "your balance is"+str(self.balance)
@@ -52,7 +52,7 @@ class account:
                 tr=" debited to"
             else :
                 tr=" credited from"
-            lst.append(" rupee"+str(i[0])+tr+" account "+str(i[1]))
+            lst.append(" rupee"+str(i[0])+tr+" account "+str(i[1])+".")
         return lst
 
 def getAcc(phone):
@@ -71,8 +71,8 @@ states=[
     "askForExit"
 ]
 
-ending=["enter * for main menu",
-        "enter # to end this call"]
+ending=["enter * for main menu.",
+        "enter # to end this call."]
 
 
 def menu(data,acc:account,):
@@ -84,11 +84,11 @@ def menu(data,acc:account,):
         chL=1
         nextState=states[-1]
     elif data=="2":
-        prompts=["enter account number of beneficiary and then ammount separated by # and ending with *"]
+        prompts=["enter account number of beneficiary and then ammount, separated by # and ending with *."]
         chL="*"
         nextState=states[2]
     elif data=="3":
-        prompts=['your last five transactions are']+acc.fiveTR()+ending
+        prompts=['your last five transactions are,']+acc.fiveTR()+ending
         chL=1
         nextState=states[-1]
     elif data=="4":
@@ -138,8 +138,8 @@ def transferring_money(data:str,acc:account):
         ammount=int(ammount[0:-1])
     except:
         response=JaxlIVRResponse(
-            prompt=['Invalid Input',
-                    "enter account number of beneficiary and then ammount separated by # and ending with *"],
+            prompt=['Invalid Input.',
+                    "enter account number of beneficiary and then ammount separated by # and ending with *."],
             num_characters="*",
             stream=None,
         )
