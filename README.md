@@ -1,149 +1,115 @@
-# Jaxl IVR Simulator
+# Amazon Order Tracking IVR
 
-Welcome to Jaxl IVR Simulator.
+Welcome to the Amazon Order Tracking IVR project.
 
-# Table of Contents
+## Table of Contents
 
-- [What is an IVR?](#what-is-an-ivr)
-- [Prompt](#prompts)
-  - [Prompt Strings](#prompt-strings)
-  - [Prompt Audio](#prompt-audios)
-- [About Jaxl IVR Simulator](#about-jaxl-ivr-simulator)
-- [Try Jaxl IVR Simulator](#try-jaxl-ivr-simulator)
-- [Initialize your IVR Project Directory](#initialize-your-ivr-project-directory)
-- [Create your First IVR](#create-your-first-ivr)
+- [Project Structure](#project-structure)
+- [Setup](#setup)
+- [Running the IVR](#running-the-ivr)
+- [Testing](#testing)
 
-## What is an IVR?
+## Project Structure
 
-```
-Press 1 to confirm the transaction,
-Press 2 to block the card and talk to our customer representation,
-Press 3 to repeat the options
-```
+The project contains the following files and directories:
 
-If you have ever experienced a call where the system is asking for your inputs like above, you already understand how an [IVR](https://en.wikipedia.org/wiki/Interactive_voice_response) works.
+- `schemas/`: Contains the IVR schema definitions.
+- `tests/`: Contains unit tests for the webhook.
+- `webhooks/`: Contains the webhook logic.
+- `.gitignore`: Lists files and directories to be ignored by git.
+- `requirements.txt`: Lists the Python dependencies.
+- `ivr.json`: Defines the IVR schema for validation purposes.
+- `IVR.md`: Provides documentation on creating and using the IVR system.
+- `README.md`: This file.
 
-## Prompts
+## Setup
 
-### Prompt Strings
+1. Create a Python virtual environment and install dependencies:
 
-Sentences spoken out by the system are referred to as **"Prompt Strings"**.
+    ```bash
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
+    ```
 
-During a call, Jaxl IVR Infrastructure convert prompt strings into audio files and playback to the user over the call.
+2. Make sure VSCode is using the Python virtual environment as the default interpreter.
 
-Some examples of prompt string includes:
+## Running the IVR
 
-1. Welcome to My Company.
-2. Welcome to Jaxl. Press 1 for customer care. Press 2 for HR department.
-3. Thank you for calling us. One of our customer representative will call you back soon. Bye
-4. Welcome to Jaxl Payments. Your total amount due is 51 rupee. To make a payment please enter your credit card number followed by star.
+1. Generate the IVR schema and webhook code:
 
-### Prompt Audios
+    On Mac & Linux:
 
-Your IVR can also playback custom audio files. Example, playing out a music while the user waits. Such custom audio files are referred to as **"Prompt Audios"**.
+    ```bash
+    docker run \
+        -it --rm \
+        -v ${PWD}:/jaxl/ivr \
+        jaxlinnovationsprivatelimited/jaxl-ivr-simulator create amazon_order_tracking
+    ```
 
-A prompt string can also be followed by a prompt audio. Example:
+    On Windows using cmd.exe:
 
-1. Hello. You have reached Jaxl customer support. Please wait while we connect your call. "Prompt Audio playing music".
+    ```bash
+    docker run ^
+        -it --rm ^
+        -v %cd%:/jaxl/ivr ^
+        jaxlinnovationsprivatelimited/jaxl-ivr-simulator create amazon_order_tracking
+    ```
 
-A prompt audio alone works too. Example:
+    On Windows using PowerShell:
 
-1. "Prompt audio playing music"
+    ```bash
+    docker run `
+        -it --rm `
+        -v ${PWD}:/jaxl/ivr `
+        jaxlinnovationsprivatelimited/jaxl-ivr-simulator create amazon_order_tracking
+    ```
 
-## About Jaxl IVR Simulator
+2. Run the IVR simulation:
 
-Jaxl IVR Simulator is available as a Docker container. It allows you to quickly build and test your custom IVRs.
+    On Mac & Linux:
 
-In a nutshell, your IVR will be responsible for:
+    ```bash
+    docker run \
+        -it --rm \
+        -v ~/.jaxl:/jaxl/.jaxl \
+        -v ~/.proxy:/jaxl/.proxy \
+        -v ${PWD}:/jaxl/ivr \
+        jaxlinnovationsprivatelimited/jaxl-ivr-simulator run amazon_order_tracking
+    ```
 
-1. Returning [**"prompt strings"**](#prompt-strings) and/or [**"prompt audios"**](#prompt-audios) that will be spoken out to the user
-2. Handle user inputs and return [**prompts**](#prompts) in reply to the user
+    On Windows using cmd.exe:
 
-At any point, IVRs can also return prompts followed by hangup to terminate the call.
+    ```bash
+    docker run ^
+        -it --rm ^
+        -v %USERPROFILE%\.jaxl:/jaxl/.jaxl ^
+        -v %USERPROFILE%\.proxy:/jaxl/.proxy ^
+        -v %cd%:/jaxl/ivr ^
+        jaxlinnovationsprivatelimited/jaxl-ivr-simulator run amazon_order_tracking
+    ```
 
-## Try Jaxl IVR Simulator
+    On Windows using PowerShell:
 
-Lets give it a try by passing `-h` flag to it:
+    ```bash
+    docker run `
+        -it --rm `
+        -v ${HOME}\.jaxl:/jaxl/.jaxl `
+        -v ${HOME}\.proxy:/jaxl/.proxy `
+        -v ${PWD}:/jaxl/ivr `
+        jaxlinnovationsprivatelimited/jaxl-ivr-simulator run amazon_order_tracking
+    ```
+
+## Testing
+
+Run the tests to ensure your code is working correctly:
 
 On Mac & Linux:
 
 ```bash
 docker run \
-  -it --rm \
-  jaxlinnovationsprivatelimited/jaxl-ivr-simulator -h
-```
-
-On Windows using cmd.exe
-
-```bash
-docker run ^
-  -it --rm ^
-  jaxlinnovationsprivatelimited/jaxl-ivr-simulator -h
-```
-
-On Windows using PowerShell
-
-```bash
-docker run `
-  -it --rm `
-  jaxlinnovationsprivatelimited/jaxl-ivr-simulator -h
-```
-
-You should see following usage information:
-
-```console
-Jaxl IVR Simulator Command Line Interface
-
-positional arguments:
-  {init,create,run}
-    init             Initialize the IVR project directory
-    create           Create a new IVR with the given name
-    run              Run an IVR with the given name
-
-options:
-  -h, --help         show this help message and exit
-```
-
-## Initialize your IVR Project Directory
-
-1. Create a new directory that will contain your IVR code. For documentation purposes, let's imagine have created a new directory at following path on your system `/path/to/ivr/playground/directory`
-
-   > NOTE: Use a path appropriate for your system.
-
-2. Within your IVR project directory, run the following command:
-
-   On Mac & Linux:
-
-   ```bash
-   docker run \
-       -it --rm \
-       -v ${PWD}:/jaxl/ivr \
-       jaxlinnovationsprivatelimited/jaxl-ivr-simulator init
-   ```
-
-   On Windows using cmd.exe
-
-   ```bash
-   docker run ^
-       -it --rm ^
-       -v %cd%:/jaxl/ivr ^
-       jaxlinnovationsprivatelimited/jaxl-ivr-simulator init
-   ```
-
-   On Windows using PowerShell
-
-   ```bash
-   docker run `
-       -it --rm `
-       -v ${PWD}:/jaxl/ivr `
-       jaxlinnovationsprivatelimited/jaxl-ivr-simulator init
-   ```
-
-## Create your First IVR
-
-`init` command has initialized your IVR project directory structure as expected by Jaxl IVR Simulator.
-
-To create your first IVR:
-
-1. Open your project directory in `VSCode`
-2. Follow [`PROJECT.md`](./PROJECT.md) placed in your project directory for further instructions.
+    -it --rm \
+    -v ~/.jaxl:/jaxl/.jaxl \
+    -v ~/.proxy:/jaxl/.proxy \
+    -v ${PWD}:/jaxl/ivr \
+    jaxlinnovationsprivatelimited/jaxl-ivr-simulator check

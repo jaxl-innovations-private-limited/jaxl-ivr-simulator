@@ -1,0 +1,24 @@
+{
+    "ivr": {
+        "initial": {
+            "prompt": "Welcome to Jaxl. Press 1 to confirm the transaction, Press 2 to block the card and talk to our customer representation, Press 3 to repeat the options",
+            "options": {
+                "1": {
+                    "prompt": "Your transaction has been confirmed. Thank you!",
+                    "end": true
+                },
+                "2": {
+                    "prompt": "Your card has been blocked. Connecting to customer representative...",
+                    "next": "connect_customer_rep"
+                },
+                "3": {
+                    "repeat": "initial"
+                }
+            }
+        },
+        "connect_customer_rep": {
+            "prompt": "Please wait while we connect your call.",
+            "audio": "path/to/music.mp3"
+        }
+    }
+}

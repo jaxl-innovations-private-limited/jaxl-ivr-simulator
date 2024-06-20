@@ -1,0 +1,4 @@
+pytest
+isort
+autoflake
+boto3

@@ -1,0 +1,68 @@
+{
+    "ivr_name": "amazon_order_tracking",
+    "states": [
+        {
+            "state_name": "welcome",
+            "type": "message",
+            "message": "Welcome to Amazon order tracking. Press 1 to check your order status, 2 to cancel your order, or 3 to speak to an agent.",
+            "next_state": "get_selection"
+        },
+        {
+            "state_name": "get_selection",
+            "type": "input",
+            "input_type": "dtmf",
+            "next_state": {
+                "1": "get_order_number",
+                "2": "cancel_order",
+                "3": "speak_to_agent"
+            }
+        },
+        {
+            "state_name": "get_order_number",
+            "type": "input",
+            "message": "Please enter your order number followed by the hash key.",
+            "next_state": "track_order"
+        },
+        {
+            "state_name": "track_order",
+            "type": "action",
+            "action": "track_order_status",
+            "next_state": "provide_status"
+        },
+        {
+            "state_name": "provide_status",
+            "type": "message",
+            "message": "{order_status_message}",
+            "next_state": "end"
+        },
+        {
+            "state_name": "cancel_order",
+            "type": "input",
+            "message": "Please enter your order number to cancel followed by the hash key.",
+            "next_state": "confirm_cancellation"
+        },
+        {
+            "state_name": "confirm_cancellation",
+            "type": "action",
+            "action": "cancel_order",
+            "next_state": "cancellation_status"
+        },
+        {
+            "state_name": "cancellation_status",
+            "type": "message",
+            "message": "{cancellation_message}",
+            "next_state": "end"
+        },
+        {
+            "state_name": "speak_to_agent",
+            "type": "transfer",
+            "message": "Please wait while we connect you to an agent.",
+            "transfer_to": "+18001234567"
+        },
+        {
+            "state_name": "end",
+            "type": "end",
+            "message": "Thank you for using Amazon order tracking. Goodbye."
+        }
+    ]
+}
