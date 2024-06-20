@@ -51,7 +51,7 @@ class JaxlIVRLitebankingWebhook(BaseJaxlIVRWebhook):
         return Path(__file__).parent.parent / "schemas" / "lite_Banking.json"
 
     def setup(self, request: JaxlIVRRequest) -> JaxlIVRResponse:
-        self.current_state="main_menu"
+        self.current_state="menu"
         return MAIN_MENU
 
     def teardown(self, request: JaxlIVRRequest) -> None:
@@ -61,7 +61,10 @@ class JaxlIVRLitebankingWebhook(BaseJaxlIVRWebhook):
 
     def handle_option(self, request: JaxlIVRRequest) -> JaxlIVRResponse:
         assert request["option"]
-        return  
+        data=request.get("data")
+        ret=banking.stateInputMap[self.current_state](data,self.acc)
+        self.current_state=ret[-1]
+        return ret[0]
         # if request.get("data", None) is not None:
         #     data = request["data"]
         #     assert data is not None

@@ -64,7 +64,7 @@ ending=["enter * for main menu",
 def menu(data,acc:account,):
     prompts=[]
     chL=0
-    nextState=menu
+    nextState="menu"
     if data=="1":
         prompts=[acc.bal_enquiry()]+ending
         chL=6
@@ -108,7 +108,7 @@ def askForExit(data,acc):
         return [response,"exit"]
 
 
-def tansferring_money(data:str,acc:account):
+def transferring_money(data:str,acc:account):
     try:
         beneficiary,ammount=data.split('#')
         if(len(beneficiary)!=6):
@@ -151,3 +151,10 @@ def block_card(data,acc:account):
             stream=None,
         )
     return [response,states[-1]]
+
+stateInputMap={
+    "menu":menu,
+    "askForExit":askForExit,
+    "transferring_money":transferring_money,
+    "block_card":block_card
+}
