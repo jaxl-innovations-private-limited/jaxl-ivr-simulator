@@ -92,26 +92,3 @@ class JaxlIVRInformativefactsWebhook(BaseJaxlIVRWebhook):
         raise NotImplementedError()
 
 
-# class JaxlIVRInformativefactsWebhook(BaseJaxlIVRWebhook):
-#     """informativefacts.json webhook implementation."""
-
-#     @staticmethod
-#     def config() -> ConfigPathOrDict:
-#         return Path(__file__).parent.parent / "schemas" / "informativefacts.json"
-
-#     def setup(self, request: JaxlIVRRequest) -> JaxlIVRResponse:
-#         raise NotImplementedError()
-
-#     def teardown(self, request: JaxlIVRRequest) -> None:
-#         raise NotImplementedError()
-
-#     def handle_option(self, request: JaxlIVRRequest) -> JaxlIVRResponse:
-#         raise NotImplementedError()
-
-#     def stream(
-#         self,
-#         request: JaxlIVRRequest,
-#         chunk_id: int,
-#         sstate: Any,
-#     ) -> Optional[Tuple[Any, JaxlIVRResponse]]:
-#         raise NotImplementedError()

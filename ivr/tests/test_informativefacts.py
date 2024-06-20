@@ -18,8 +18,6 @@ class TestJaxlIVRInformativefactsWebhook(BaseJaxlIVRWebhookTestCase):
 
     def setUp(self) -> None:
         super().setUp()
-
-        # Start the call to webhook during setup
         self.start_call()
 
     def test_main_menu(self) -> None:
@@ -27,8 +25,6 @@ class TestJaxlIVRInformativefactsWebhook(BaseJaxlIVRWebhookTestCase):
 
         Response of start_call is available as `self.start_call_response`.
         """
-        # # Complete me
-        # self.assertEqual(1, 1)
         assert self.start_call_request and self.start_call_response
         self.assertEqual(self.start_call_request["name"], "informativefacts")
         self.assertEqual(self.start_call_response["prompt"], MAIN_MENU_PROMPT)
@@ -36,35 +32,35 @@ class TestJaxlIVRInformativefactsWebhook(BaseJaxlIVRWebhookTestCase):
         self.assertEqual(self.start_call_response["stream"], None)
 
     def test_choose_option_1(self) -> None:
-        """Test selecting option 1 for new appointment."""
+        """Test selecting option 1 for fact about humans."""
         _request, response = self.choose_option("1")
         self.assertEqual(response["prompt"], get_operation_prompt("1"))
         self.assertEqual(response["num_characters"], 1)
         self.assertEqual(response["stream"], None)
 
     def test_choose_option_2(self) -> None:
-        """Test selecting option 2 to cancel appointment."""
+        """Test selecting option 2 for fact about animals."""
         _request, response = self.choose_option("2")
         self.assertEqual(response["prompt"], get_operation_prompt("2"))
         self.assertEqual(response["num_characters"], 1)
         self.assertEqual(response["stream"], None)
 
     def test_choose_option_3(self) -> None:
-        """Test selecting option 3 to reschedule appointment."""
+        """Test selecting option 3 for facts about insects."""
         _request, response = self.choose_option("3")
         self.assertEqual(response["prompt"], get_operation_prompt("3"))
         self.assertEqual(response["num_characters"], 1)
         self.assertEqual(response["stream"], None)
 
     def test_choose_option_4(self) -> None:
-        """Test selecting option 4 to confirm existing appointment."""
+        """Test selecting option 4 for facts about plants."""
         _request, response = self.choose_option("4")
         self.assertEqual(response["prompt"], get_operation_prompt("4"))
         self.assertEqual(response["num_characters"], 1)
         self.assertEqual(response["stream"], None)
 
     def test_choose_option_0_star(self) -> None:
-        """Test selecting option 0* to repeat the main menu."""
+        """Test selecting option 0 to repeat the main menu."""
         _request, response = self.choose_option("0")
         self.assertEqual(response["prompt"], MAIN_MENU_PROMPT)
         self.assertEqual(response["num_characters"], 1)
