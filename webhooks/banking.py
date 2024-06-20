@@ -1,5 +1,5 @@
 import random
-from . import MAIN_MENU_PROMPT
+from . import MAIN_MENU_PROMPT,MAIN_MENU
 from jaxl.ivr.frontend.base import (
     # BaseJaxlIVRWebhook,
     # ConfigPathOrDict,
@@ -53,7 +53,8 @@ states=[
     "transferring_money",
     "five_transactions ",
     "block_card",
-    "exit"
+    "exit",
+    "askForExit"
 ]
 
 ending=["enter * for main menu",
@@ -67,15 +68,15 @@ def menu(data,acc:account,):
     if data=="1":
         prompts=[acc.bal_enquiry()]+ending
         chL=6
-        nextState=states[1]
+        nextState=states[-1]
     elif data=="2":
         prompts=["enter account number of beneficiary and then ammount separated by # and ending with *"]
         chL="*"
         nextState=states[2]
     elif data=="3":
-        prompts=['your last five transactions are']+acc.fiveTR()
+        prompts=['your last five transactions are']+acc.fiveTR()+ending
         chL=1
-        nextState=states[3]
+        nextState=states[-1]
     elif data=="4":
         prompts=['enter 16 digit car number']
         chL=16
@@ -95,5 +96,39 @@ def menu(data,acc:account,):
         )
     return [response,nextState]
 
-def balance(data,acc):
+def askForExit(data,acc):
+    if(data=='*'):
+        return [MAIN_MENU,menu]
+    if data=='#':
+        response=JaxlIVRResponse(
+            prompt=["good by","have a good day"],
+            num_characters=1,
+            stream=None,
+        )
+        return [response,"exit"]
+
+
+def tansferring_money(data:str,acc:account):
+    try:
+        beneficiary,ammount=data.split('#')
+        if(len(beneficiary)!=6):
+            raise ArithmeticError
+        beneficiary=int(beneficiary)
+        ammount=int(ammount[0:-1])
+    except:
+        response=JaxlIVRResponse(
+            prompt=['Invalid Input',
+                    "enter account number of beneficiary and then ammount separated by # and ending with *"],
+            num_characters="*",
+            stream=None,
+        )
+        return [response,states[2]]
+    beneficiary=account(beneficiary)
+    prompts=[acc.transfer(beneficiary,ammount)]+ending
+    response=JaxlIVRResponse(
+            prompt=prompts,
+            num_characters=1,
+            stream=None,
+        )
+    return [response,states[-1]]
 
