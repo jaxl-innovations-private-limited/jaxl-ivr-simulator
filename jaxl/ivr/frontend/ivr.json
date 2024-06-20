@@ -1,0 +1,168 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "webhook_klass": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string"
+            },
+            "class": {
+              "type": "string"
+            }
+          },
+          "required": ["url", "class"]
+        }
+      ]
+    },
+    "ivrs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "pk": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "greeting_message": {
+            "type": "string",
+            "pattern": "^(?!.*\\.$).*$"
+          },
+          "webhook": {
+            "type": "boolean"
+          },
+          "hangup": {
+            "type": "boolean"
+          },
+          "options": {
+            "type": "object",
+            "patternProperties": {
+              "^[0-9*#]$": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "next": {
+                    "oneOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["url", "name"]
+                      }
+                    ]
+                  }
+                },
+                "anyOf": [
+                  {
+                    "required": ["name", "next"]
+                  },
+                  {
+                    "required": ["name", "webhook"]
+                  },
+                  {
+                    "required": ["name", "groups"]
+                  },
+                  {
+                    "required": ["name", "devices"]
+                  },
+                  {
+                    "required": ["name", "phone"]
+                  }
+                ],
+                "required": ["name"]
+              }
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "anyOf": [
+          {
+            "required": ["name", "webhook"]
+          },
+          {
+            "required": ["name", "greeting_message", "options"]
+          },
+          {
+            "required": ["name", "greeting_message", "hangup"]
+          }
+        ],
+        "required": ["name"]
+      }
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "email"
+            }
+          }
+        },
+        "required": ["name", "members"]
+      }
+    },
+    "devices": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "device_id": {
+            "type": "integer"
+          }
+        },
+        "required": ["name", "device_id"]
+      }
+    },
+    "phones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "e164": {
+            "type": "string",
+            "pattern": "^\\+[1-9]\\d{1,14}$"
+          }
+        },
+        "required": ["name", "e164"]
+      }
+    }
+  },
+  "required": ["ivrs", "groups", "devices", "phones"]
+}

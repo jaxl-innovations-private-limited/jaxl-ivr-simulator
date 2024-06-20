@@ -4,14 +4,16 @@ Welcome to Jaxl IVR Simulator.
 
 # Table of Contents
 
-- [What is an IVR?](#what-is-an-ivr)
-- [Prompt](#prompts)
-  - [Prompt Strings](#prompt-strings)
-  - [Prompt Audio](#prompt-audios)
-- [About Jaxl IVR Simulator](#about-jaxl-ivr-simulator)
-- [Try Jaxl IVR Simulator](#try-jaxl-ivr-simulator)
-- [Initialize your IVR Project Directory](#initialize-your-ivr-project-directory)
-- [Create your First IVR](#create-your-first-ivr)
+- [Jaxl IVR Simulator](#jaxl-ivr-simulator)
+- [Table of Contents](#table-of-contents)
+  - [What is an IVR?](#what-is-an-ivr)
+  - [Prompts](#prompts)
+    - [Prompt Strings](#prompt-strings)
+    - [Prompt Audios](#prompt-audios)
+  - [About Jaxl IVR Simulator](#about-jaxl-ivr-simulator)
+  - [Try Jaxl IVR Simulator](#try-jaxl-ivr-simulator)
+  - [Initialize your IVR Project Directory](#initialize-your-ivr-project-directory)
+  - [Create your First IVR](#create-your-first-ivr)
 
 ## What is an IVR?
 
