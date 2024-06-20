@@ -132,3 +132,22 @@ def tansferring_money(data:str,acc:account):
         )
     return [response,states[-1]]
 
+def block_card(data,acc:account):
+    try:
+        card=int(data)
+    except:
+        response=JaxlIVRResponse(
+            prompt=['Invalid Input',
+                    'enter 16 digit car number'],
+            num_characters=16,
+            stream=None,
+        )
+        return [response,states[4]]
+    #In future blocking card logic will be developed and added here
+    #for now just let make it 
+    response=JaxlIVRResponse(
+            prompt=["your card has been successfully blocked"]+ending,
+            num_characters=1,
+            stream=None,
+        )
+    return [response,states[-1]]
