@@ -1,21 +1,21 @@
 """
 Copyright (c) 2010-present by Jaxl Innovations Private Limited.
+
 All rights reserved.
+
 Redistribution and use in source and binary forms,
 with or without modification, is strictly prohibited.
 """
 
-from webhooks.Adventure import (
+from webhooks.adventure import (
     JaxlIVRAdventureWebhook,
     MAIN_MENU_PROMPT,
-    get_option_prompt,
-    confirm_option,
+    get_adventure_prompt,
 )
 from jaxl.ivr.frontend.base import BaseJaxlIVRWebhookTestCase
 
-
-class TestJaxlIVRAdventureWebhook(BaseJaxlIVRWebhookTestCase):
-    """Test cases for JaxlIVRAdventureWebhook IVR."""
+class TestAdventureGame(BaseJaxlIVRWebhookTestCase):
+    """Test cases for Adventure Game IVR."""
 
     webhook_klass = JaxlIVRAdventureWebhook
 
@@ -26,28 +26,48 @@ class TestJaxlIVRAdventureWebhook(BaseJaxlIVRWebhookTestCase):
     def test_main_menu(self) -> None:
         """Test main menu prompt is returned as expected after start of call."""
         assert self.start_call_request and self.start_call_response
-        self.assertEqual(self.start_call_request["name"], "Adventure")
+        self.assertEqual(self.start_call_request["name"], "adventure")  # Ensure the name is adventure
         self.assertEqual(self.start_call_response["prompt"], MAIN_MENU_PROMPT)
         self.assertEqual(self.start_call_response["num_characters"], 1)
         self.assertEqual(self.start_call_response["stream"], None)
 
-    def test_option_prompt(self) -> None:
-        """Test relevant option is asked when option is chosen by the user."""
-        for option_id in range(1, 5):  # Adjust range based on number of options
-            _request, response = self.choose_option(str(option_id))
-            self.assertEqual(response["prompt"], get_option_prompt(option_id))
+    def test_options(self) -> None:
+        """Test relevant paths get triggered when 1, 2, 3 are chosen by the user."""
+        for option in ("1", "2", "3"):
+            _request, response = self.choose_option(option)
+            self.assertEqual(response["prompt"], get_adventure_prompt(option))
             self.assertEqual(response["num_characters"], 1)
             self.assertEqual(response["stream"], None)
 
-    def test_confirm_option(self) -> None:
-        """Test confirming the user's choice."""
-        for option_id, correct_choice in [(1, "1"), (2, "1"), (3, "2"), (4, "2")]:
-            _request, response = self.choose_option_and_send(str(option_id), correct_choice)
-            self.assertEqual(response["prompt"], [f"You have chosen to {correct_choice}. Enjoy your adventure!"])
-            self.assertEqual(response["num_characters"], 1)
-            self.assertEqual(response["stream"], None)
+    def test_choose_path(self) -> None:
+        """Test user can choose paths and receive appropriate prompts."""
+        paths_to_test = {
+            "1": "1_1",  # Choosing path 1 leads to 1_1
+            "2": "2_1",  # Choosing path 2 leads to 2_1
+            "3": "3_1",  # Choosing path 3 leads to 3_1
+        }
 
-            # Test incorrect choice
-            _request, response = self.choose_option_and_send(str(option_id), "invalid")
-            self.assertEqual(response["prompt"], ["Some error occurred"])  # Adjust as per error handling
+        for initial_path, chosen_path in paths_to_test.items():
+            _request, response = self.choose_option_and_send(initial_path, "1*")
+            self.assertEqual(response["prompt"], get_adventure_prompt(chosen_path))
 
+    def test_invalid_choice(self) -> None:
+        """Test invalid choice handling."""
+        _request, response = self.choose_option_and_send("4", "1*")
+        self.assertEqual(response["prompt"], ["Invalid choice. Please try again."])
+        self.assertEqual(response["num_characters"], 1)
+        self.assertEqual(response["stream"], None)
+
+    def test_invalid_data_format(self) -> None:
+        """Test invalid data format handling."""
+        _request, response = self.choose_option_and_send("2", "invalid*")
+        self.assertEqual(response["prompt"], ["Invalid choice. Please try again."])
+        self.assertEqual(response["num_characters"], 1)
+        self.assertEqual(response["stream"], None)
+
+    def test_repeat_menu(self) -> None:
+        """Test repeating the main menu."""
+        _request, response = self.choose_option_and_send("0", "0*")
+        self.assertEqual(response["prompt"], MAIN_MENU_PROMPT)
+        self.assertEqual(response["num_characters"], 1)
+        self.assertEqual(response["stream"], None)

@@ -1,6 +1,8 @@
 """
 Copyright (c) 2010-present by Jaxl Innovations Private Limited.
+
 All rights reserved.
+
 Redistribution and use in source and binary forms,
 with or without modification, is strictly prohibited.
 """
@@ -17,9 +19,10 @@ from jaxl.ivr.frontend.base import (
 
 
 MAIN_MENU_PROMPT = [
-    "Press 1 to start your adventure. ",
-    "Press 2 for more options. ",
-    "Press 0 followed by a star sign to repeat this menu.",
+    "Press 1 to visit the village.",
+    "Press 2 to explore the forest.",
+    "Press 3 to climb the mountain.",
+    "Press 0 to repeat this menu.",
 ]
 
 MAIN_MENU = JaxlIVRResponse(
@@ -28,77 +31,111 @@ MAIN_MENU = JaxlIVRResponse(
     stream=None,
 )
 
-OPTIONS = {
-    1: {
-        "option": "Start your adventure",
-        "choices": ["1. Explore the forest", "2. Enter the cave", "3. Climb the mountain"],
-    },
-    2: {
-        "option": "More options",
-        "choices": ["1. Visit the village", "2. Search for treasure", "3. Cross the river"],
-    },
-    3: {
-        "option": "Mysterious encounters",
-        "choices": ["1. Encounter a wizard", "2. Meet a friendly dragon"],
-    },
-    4: {
-        "option": "Final challenges",
-        "choices": ["1. Battle with a monster", "2. Solve a riddle"],
-    },
-}
-
-def get_option_prompt(option_id: int) -> List[str]:
-    """Returns prompt for the option based on option_id."""
-    option = OPTIONS[option_id]["option"]
-    choices = OPTIONS[option_id]["choices"]
-    return [option] + choices + ["Enter your choice followed by the star sign."]
-
-def confirm_option(option_id: int, user_choice: str) -> List[str]:
-    """Confirm the user's selected option and return the appropriate response."""
-    return [f"You have chosen to {user_choice}. Enjoy your adventure!"]
+def get_adventure_prompt(option: str) -> List[str]:
+    """Returns prompt based upon user choice."""
+    if option == "1":
+        return [
+            "You visit the village and meet a friendly villager.",
+            "Press 1 to ask for directions.",
+            "Press 2 to trade with the villager."
+        ]
+    elif option == "2":
+        return [
+            "You explore the forest and find a hidden path.",
+            "Press 1 to follow the path.",
+            "Press 2 to investigate the strange noise."
+        ]
+    elif option == "3":
+        return [
+            "You climb the mountain and reach a cave.",
+            "Press 1 to enter the cave.",
+            "Press 2 to set up camp outside the cave."
+        ]
+    elif option == "4":
+        return [
+            "You ask for directions and the villager points you to a nearby town.",
+            "Press 1 to go to the town.",
+            "Press 2 to stay in the village."
+        ]
+    elif option == "5":
+        return [
+            "You trade with the villager and get a magical item.",
+            "Press 1 to use the item.",
+            "Press 2 to keep it for later."
+        ]
+    elif option == "6":
+        return [
+            "You follow the path and find a river.",
+            "Press 1 to drink the water.",
+            "Press 2 to follow the river upstream."
+        ]
+    elif option == "7":
+        return [
+            "You investigate the noise and find a hidden treasure.",
+            "Press 1 to take the treasure.",
+            "Press 2 to leave it and continue exploring."
+        ]
+    elif option == "8":
+        return [
+            "You enter the cave and find ancient drawings.",
+            "Press 1 to study the drawings.",
+            "Press 2 to leave the cave."
+        ]
+    elif option == "9":
+        return [
+            "You set up camp and rest for the night.",
+            "Press 1 to explore the surroundings.",
+            "Press 2 to stay at the camp."
+        ]
+    else:
+        return ["Invalid choice. Please try again."]
 
 class JaxlIVRAdventureWebhook(BaseJaxlIVRWebhook):
-    """Adventure.json webhook implementation."""
+    """Adventure game IVR webhook implementation."""
 
     def __init__(self) -> None:
         super().__init__()
-        self._current_option_id: Optional[int] = None
+        self._current_path: Optional[str] = None
         self._end_char = "*"
+        self._separator = "#"
 
     @staticmethod
     def config() -> ConfigPathOrDict:
-        return Path(__file__).parent.parent / "schemas" / "Adventure.json"
+        return Path(__file__).parent.parent / "schemas" / "adventure.json"
 
     def setup(self, request: JaxlIVRRequest) -> JaxlIVRResponse:
+        request["name"] = "adventure"  # Ensure the name is set to adventure
         return MAIN_MENU
 
     def teardown(self, request: JaxlIVRRequest) -> None:
-        print("End of adventure call")
+        print("End of call")
 
     def handle_option(self, request: JaxlIVRRequest) -> JaxlIVRResponse:
         assert request["option"]
-        
-        if "data" in request and request["data"] is not None:
+        if request.get("data", None) is not None:
             data = request["data"]
-            assert data[-1] == self._end_char and self._current_option_id is not None
-            
+            assert data is not None
+            assert data[-1] == self._end_char and self._current_path
             if len(data) == 2 and data[0] == "0":
-                self._current_option_id = None
+                self._current_path = None
                 return MAIN_MENU
+
+            option = data[0]
+            next_path = f"{self._current_path}_{option}" if self._current_path else option
+            prompt = get_adventure_prompt(next_path)
+            self._current_path = next_path if prompt != ["Invalid choice. Please try again."] else self._current_path
             
-            user_choice = data[0]
-            response_prompt = confirm_option(self._current_option_id, user_choice)
             return JaxlIVRResponse(
-                prompt=response_prompt,
-                num_characters=len(self._end_char),
-                stream=None,
+                prompt=prompt,
+                num_characters=1,
+                stream=None
             )
-        
-        self._current_option_id = int(request["option"])
+
+        self._current_path = request["option"]
         return JaxlIVRResponse(
-            prompt=get_option_prompt(self._current_option_id),
-            num_characters=len(self._end_char),
-            stream=None,
+            prompt=get_adventure_prompt(request["option"]),
+            num_characters=1,
+            stream=None
         )
 
     def stream(
@@ -108,4 +145,3 @@ class JaxlIVRAdventureWebhook(BaseJaxlIVRWebhook):
         sstate: Any,
     ) -> Optional[Tuple[Any, JaxlIVRResponse]]:
         raise NotImplementedError()
-
