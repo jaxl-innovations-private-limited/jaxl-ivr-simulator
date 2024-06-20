@@ -1,0 +1,11 @@
+{
+  "groups": [],
+  "devices": [],
+  "phones": [],
+  "ivrs": [
+    {
+      "name": "emergency_info",
+      "webhook": true
+    }          
+  ]
+}
