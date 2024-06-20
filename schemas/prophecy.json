@@ -4,7 +4,7 @@
   "phones": [],
   "ivrs": [
     {
-      "name": "hearjokes",
+      "name": "prophecy",
       "webhook": true
     }
   ]
