@@ -84,7 +84,7 @@ def menu(data,acc:account,):
         chL=1
         nextState=states[-1]
     elif data=="2":
-        prompts=["enter account number of beneficiary and then ammount, separated by # and ending with *."]
+        prompts=["enter 6 digit account number of beneficiary and then ammount, separated by # and ending with *."]
         chL="*"
         nextState=states[2]
     elif data=="3":
