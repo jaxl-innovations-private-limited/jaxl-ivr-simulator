@@ -139,7 +139,7 @@ def transferring_money(data:str,acc:account):
     except:
         response=JaxlIVRResponse(
             prompt=['Invalid Input.',
-                    "enter account number of beneficiary and then ammount separated by # and ending with *."],
+                    "enter 6 digit account number of beneficiary and then ammount separated by # and ending with *."],
             num_characters="*",
             stream=None,
         )
