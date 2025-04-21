@@ -95,13 +95,17 @@ You should see following usage information:
 Jaxl IVR Simulator Command Line Interface
 
 positional arguments:
-  {init,create,run}
-    init             Initialize the IVR project directory
-    create           Create a new IVR with the given name
-    run              Run an IVR with the given name
+  {login,init,create,check,run,call,logout}
+    login               Login
+    init                Initialize the IVR project directory
+    create              Create a new IVR with the given name
+    check               Perform code level checks before submission
+    run                 Run an IVR with the given name
+    call                Make an outgoing call and control it through your Jaxl IVR application
+    logout              Logout
 
 options:
-  -h, --help         show this help message and exit
+  -h, --help            show this help message and exit
 ```
 
 ## Initialize your IVR Project Directory
@@ -138,6 +142,32 @@ options:
        -v ${PWD}:/jaxl/ivr `
        jaxlinnovationsprivatelimited/jaxl-ivr-simulator init
    ```
+
+`init` command will guide you through the steps.  You can run `init` command multiple times in the same directory.  If any necessary files are missing, `init` will recreate them in your project directory.
+
+You will see something like this:
+
+```bash
+[🗂️][❌] .vscode does not exist
+[🗂️][❌] jaxl/ivr/frontend does not exist
+[🗂️][❌] schemas does not exist
+[🗂️][❌] tests does not exist
+[🗂️][❌] webhooks does not exist
+[📇][❌] .vscode/settings.json does not exist
+[📇][❌] .gitignore does not exist
+[📇][❌] .isort.cfg does not exist
+[📇][❌] requirements.txt does not exist
+[📇][❌] PROJECT.md does not exist
+[📇][❌] IVR.md does not exist
+[📇][❌] tests/__init__.py does not exist
+[📇][❌] webhooks/__init__.py does not exist
+[📇][❌] jaxl/ivr/frontend/__init__.py does not exist
+[📇][❌] jaxl/ivr/frontend/base.py does not exist
+[📇][❌] jaxl/ivr/frontend/ivr.json does not exist
+Do you want to create missing files (11), update files (0) and folders (5)? [y/N]: y
+Created 5 directories
+Created 11 files
+```
 
 ## Create your First IVR
 
