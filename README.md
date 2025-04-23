@@ -1,6 +1,12 @@
 # Jaxl IVR Simulator
 
-Welcome to Jaxl IVR Simulator.
+Welcome to Jaxl IVR Simulator. Build
+
+1) Custom IVR solutions
+2) AI/ML driven conversational bots
+3) Schedule LLM driven outgoing pre-sales and post-sales calls
+
+and much more, sky is the limit with Jaxl :)
 
 # Table of Contents
 
