@@ -8,6 +8,9 @@ Welcome to Jaxl IVR Simulator. Build
 
 and much more, sky is the limit with Jaxl :)
 
+Jaxl Developer Platform (early access form):
+[https://forms.gle/71tP4YvruF4Py43J9](https://forms.gle/71tP4YvruF4Py43J9)
+
 # Table of Contents
 
 - [What is an IVR?](#what-is-an-ivr)
