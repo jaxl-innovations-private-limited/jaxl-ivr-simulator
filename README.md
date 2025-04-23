@@ -21,6 +21,7 @@ Jaxl Developer Platform (early access form):
 - [Try Jaxl IVR Simulator](#try-jaxl-ivr-simulator)
 - [Initialize your IVR Project Directory](#initialize-your-ivr-project-directory)
 - [Create your First IVR](#create-your-first-ivr)
+- [Docker Image Tags](#docker-image-tags)
 
 ## What is an IVR?
 
@@ -186,3 +187,17 @@ To create your first IVR:
 
 1. Open your project directory in `VSCode`
 2. Follow [`PROJECT.md`](./PROJECT.md) placed in your project directory for further instructions.
+
+## Docker Image Tags
+
+Two variants of docker images are available.
+
+| Base Image         | Image Size        | Tags           | Dynamic IVR | Realtime Audio & Transcription |
+|--------------------|-------------------|----------------|-------------|--------------------------------|
+| python:3.11-alpine | 6.2 GB (amd)      | latest, vN     | ✅          | ❌                             |
+| python:3.11-alpine | 666.84 MB (arm)   | latest, vN     | ✅          | ❌                             |
+| python:3.11-slim   | 58.91 MB (amd)    | realtime, vNr  | ✅          | ✅                             |
+| python:3.11-slim   | 47.31 MB (amd)    | realtime, vNr  | ✅          | ✅                             |
+
+> replace N with Docker release version e.g. v27
+> suffix with `r` for realtime variant e.g. v27r
