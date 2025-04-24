@@ -80,7 +80,7 @@ On Mac & Linux:
 ```bash
 docker run \
   -it --rm \
-  jaxlinnovationsprivatelimited/jaxl-ivr-simulator:v28 -h
+  jaxlinnovationsprivatelimited/jaxl-ivr-simulator -h
 ```
 
 On Windows using cmd.exe
@@ -88,7 +88,7 @@ On Windows using cmd.exe
 ```bash
 docker run ^
   -it --rm ^
-  jaxlinnovationsprivatelimited/jaxl-ivr-simulator:v28 -h
+  jaxlinnovationsprivatelimited/jaxl-ivr-simulator -h
 ```
 
 On Windows using PowerShell
@@ -96,7 +96,7 @@ On Windows using PowerShell
 ```bash
 docker run `
   -it --rm `
-  jaxlinnovationsprivatelimited/jaxl-ivr-simulator:v28 -h
+  jaxlinnovationsprivatelimited/jaxl-ivr-simulator -h
 ```
 
 You should see following usage information:
@@ -132,7 +132,7 @@ options:
    docker run \
        -it --rm \
        -v ${PWD}:/jaxlivrsimulator/ivr \
-       jaxlinnovationsprivatelimited/jaxl-ivr-simulator:v28 init
+       jaxlinnovationsprivatelimited/jaxl-ivr-simulator init
    ```
 
    On Windows using cmd.exe
@@ -141,7 +141,7 @@ options:
    docker run ^
        -it --rm ^
        -v %cd%:/jaxlivrsimulator/ivr ^
-       jaxlinnovationsprivatelimited/jaxl-ivr-simulator:v28 init
+       jaxlinnovationsprivatelimited/jaxl-ivr-simulator init
    ```
 
    On Windows using PowerShell
@@ -150,7 +150,7 @@ options:
    docker run `
        -it --rm `
        -v ${PWD}:/jaxlivrsimulator/ivr `
-       jaxlinnovationsprivatelimited/jaxl-ivr-simulator:v28 init
+       jaxlinnovationsprivatelimited/jaxl-ivr-simulator init
    ```
 
 `init` command will guide you through the steps.  You can run `init` command multiple times in the same directory.  If any necessary files are missing, `init` will recreate them in your project directory.
