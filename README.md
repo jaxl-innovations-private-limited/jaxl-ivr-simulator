@@ -88,27 +88,9 @@ At any point, IVRs can also return prompts followed by hangup to terminate the c
 
 Lets give it a try by passing `-h` flag to it:
 
-On Mac & Linux:
-
 ```bash
 docker run \
   -it --rm \
-  jaxlinnovationsprivatelimited/jaxl-ivr-simulator -h
-```
-
-On Windows using cmd.exe
-
-```bash
-docker run ^
-  -it --rm ^
-  jaxlinnovationsprivatelimited/jaxl-ivr-simulator -h
-```
-
-On Windows using PowerShell
-
-```bash
-docker run `
-  -it --rm `
   jaxlinnovationsprivatelimited/jaxl-ivr-simulator -h
 ```
 
