@@ -1,0 +1,12 @@
+{
+    "groups": [],
+    "devices": [],
+    "phones": [],
+    "ivrs": [
+      {
+        "name": "kbc_quiz",
+        "webhook": true
+      }
+    ]
+}
+  
