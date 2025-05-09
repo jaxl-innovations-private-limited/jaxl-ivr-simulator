@@ -1,0 +1,141 @@
+{
+  "groups": [],
+  "devices": [],
+  "phones": [],
+  "ivrs": [
+    {
+      "name": "general_election_poll",
+      "webhook": true,
+      "steps": [
+        {
+          "type": "message",
+          "content": "Welcome to General Election of India 2024. Press 1 for Voting, Press 2 for Instructions, Press 3 for Exit."
+        },
+        {
+          "type": "input",
+          "options": {
+            "1": "select_constituency",
+            "2": "instructions",
+            "3": "exit"
+          }
+        },
+        {
+          "type": "branch",
+          "name": "select_constituency",
+          "steps": [
+            {
+              "type": "message",
+              "content": "Please select your constituency. Press 1 for Constituency A, Press 2 for Constituency B, Press 3 for Constituency C."
+            },
+            {
+              "type": "input",
+              "options": {
+                "1": "vote_constituency_a",
+                "2": "vote_constituency_b",
+                "3": "vote_constituency_c"
+              }
+            }
+          ]
+        },
+        {
+          "type": "branch",
+          "name": "vote_constituency_a",
+          "steps": [
+            {
+              "type": "message",
+              "content": "You selected Constituency A. Press 1 to vote for Candidate X, Press 2 to vote for Candidate Y, Press 3 to vote for Candidate Z."
+            },
+            {
+              "type": "input",
+              "options": {
+                "1": "vote_candidate_x",
+                "2": "vote_candidate_y",
+                "3": "vote_candidate_z"
+              }
+            },
+            {
+              "type": "webhook",
+              "url": "https://yourserver.com/webhook"
+            },
+            {
+              "type": "message",
+              "content": "Thank you for your vote!"
+            }
+          ]
+        },
+        {
+          "type": "branch",
+          "name": "vote_constituency_b",
+          "steps": [
+            {
+              "type": "message",
+              "content": "You selected Constituency B. Press 1 to vote for Candidate A, Press 2 to vote for Candidate B, Press 3 to vote for Candidate C."
+            },
+            {
+              "type": "input",
+              "options": {
+                "1": "vote_candidate_a",
+                "2": "vote_candidate_b",
+                "3": "vote_candidate_c"
+              }
+            },
+            {
+              "type": "webhook",
+              "url": "https://yourserver.com/webhook"
+            },
+            {
+              "type": "message",
+              "content": "Thank you for your vote!"
+            }
+          ]
+        },
+        {
+          "type": "branch",
+          "name": "vote_constituency_c",
+          "steps": [
+            {
+              "type": "message",
+              "content": "You selected Constituency C. Press 1 to vote for Candidate P, Press 2 to vote for Candidate Q, Press 3 to vote for Candidate R."
+            },
+            {
+              "type": "input",
+              "options": {
+                "1": "vote_candidate_p",
+                "2": "vote_candidate_q",
+                "3": "vote_candidate_r"
+              }
+            },
+            {
+              "type": "webhook",
+              "url": "https://yourserver.com/webhook"
+            },
+            {
+              "type": "message",
+              "content": "Thank you for your vote!"
+            }
+          ]
+        },
+        {
+          "type": "branch",
+          "name": "instructions",
+          "steps": [
+            {
+              "type": "message",
+              "content": "To participate in the General Election of India 2024, please press 1 for Voting, press 2 for Instructions, and press 3 for Exit."
+            }
+          ]
+        },
+        {
+          "type": "branch",
+          "name": "exit",
+          "steps": [
+            {
+              "type": "message",
+              "content": "Thank you for calling. Goodbye!"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
